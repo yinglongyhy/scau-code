@@ -34,7 +34,7 @@ void InitHashTable(HashTable *H)
 unsigned Hash(ElemType K)
 { /* 一个简单的哈希函数*/
 
-
+    return (unsigned)3*K%length;
 
 
 
@@ -45,7 +45,7 @@ unsigned Hash(ElemType K)
 void collision(int *p) /*线性探测再散列 */
 { /* 开放定址法处理冲突 */
  
-
+    *p += 1;
 
 
 
@@ -85,7 +85,6 @@ int InsertHash(HashTable *H,ElemType e)
 void TraverseHash(HashTable H)
  { /* 按哈希地址的顺序打印哈希表，无元素位置用X表示 */
    int i;
-   printf("HashTable Address:0～%d\n",length-1);
    for(i=0;i<length;i++)
      if(H.elem[i]==NULLKEY) /* 有数据 */
        printf("X ");
@@ -93,7 +92,7 @@ void TraverseHash(HashTable H)
 		 printf("%d ",H.elem[i]); 
 	 printf("\n");
 }
-main()
+int main()
 {
 	float i=0,j=0;
 	ElemType e;
