@@ -1,0 +1,2 @@
+22 X 41 30 1 53 46 13 67 X X
+Average search length=2.000000

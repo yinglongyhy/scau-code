@@ -1,0 +1,3 @@
+The Stack is: 2 0 
+The Stack is: 3 
+0

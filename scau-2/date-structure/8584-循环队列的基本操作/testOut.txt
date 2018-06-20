@@ -1,0 +1,64 @@
+A Queue Has Created.
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Element 1 is Successfully Entered!
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Element 2 is Successfully Entered!
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Element 3 is Successfully Entered!
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Queue is: 1 2 3 
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Element 1 is Successfully Deleted!
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Head of the Queue is 2!
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:
+The Queue is: 2 3 
+1:Enter 
+2:Delete 
+3:Get the Front 
+4:Return the Length of the Queue
+5:Load the Queue
+0:Exit
+Please choose:

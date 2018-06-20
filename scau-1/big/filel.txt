@@ -1,0 +1,5 @@
+name      level     atk
+yang      4         3.00
+hong      9         3.00
+yu        4         3.00
+yhy       8         3.00

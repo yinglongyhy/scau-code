@@ -1,0 +1,96 @@
+A Stack Has Created.
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 2 is Successfully Pushed!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 4 is Successfully Pushed!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 6 is Successfully Pushed!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Stack is: 6 4 2 
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Top Element is 6!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Length of the Stack is 3!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 6 is Successfully Poped!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Stack is: 4 2 
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 4 is Successfully Poped!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+The Element 2 is Successfully Poped!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
+Pop Error!
+1:Push 
+2:Pop 
+3:Get the Top 
+4:Return the Length of the Stack
+5:Load the Stack
+0:Exit
+Please choose:
