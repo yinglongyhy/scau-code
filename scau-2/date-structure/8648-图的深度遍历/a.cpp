@@ -106,7 +106,9 @@ VertexType* GetVex(ALGraph G,int v)
 { /* 初始条件: 图G存在,v是G中某个顶点的序号。操作结果: 返回v的值 */ 
 	if(v>=G.vexnum||v<0) 
 		exit(0); 
-	return &G.vertices[v].data; 
+    VertexType *p = &G.vertices[v].data;
+    return p;
+	//return &G.vertices[v].data; 
 } 
 
 int FirstAdjVex(ALGraph G,VertexType v) 
@@ -148,13 +150,25 @@ void DFS(ALGraph G,int v)
 /* 访问第v个顶点 */ 
 /* 对v的尚未访问的邻接点w递归调用DFS */ 
 
+    if(visited[v]) return; //已经访问的直接返回
+    visited[v] = 1;//未访问的设置访问标志为TRUE（1）
+    VisitFunc(G.vertices[v].data);//访问顶点（输出data）
+    ArcNode*p = G.vertices[v].firstarc;
+    while(p)
+    {
+        DFS(G, p->adjvex);
+        p = p->nextarc;
+    }
+    
 } 
 void DFSTraverse(ALGraph G,void(*Visit)(char*)) 
 { /* 对图G作深度优先遍历。算法7.4 */ 
 /* 使用全局变量VisitFunc,使DFS不必设函数指针参数 */ 
 /* 访问标志数组初始化 */ 
 /* 对尚未访问的顶点调用DFS */ 
-
+    VisitFunc = Visit;//设置VisitFunc
+    for(int i = 0; i < MAX_VERTEX_NUM; ++i) visited[i] = 0;//访问标志数组初始化
+    for(int i = 0; i < G.vexnum; ++i) DFS(G, i);
 	printf("\n"); 
 } 
 
