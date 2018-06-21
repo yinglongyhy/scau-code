@@ -96,8 +96,8 @@ void HuffmanCoding(HuffmanTree &HT, HuffmanCode &HC, int *w, int n)
 		{
 			t = j;
 			j = HT[j].parent;
-			if(HT[j].lchild == t) p[--start] = '0';
-			if(HT[j].rchild == t) p[--start] = '1';
+			if(HT[j].lchild == (unsigned)t) p[--start] = '0';
+			if(HT[j].rchild == (unsigned)t) p[--start] = '1';
 		}
 		strcpy(HC[i], &p[start]);
 	}
