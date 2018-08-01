@@ -39,6 +39,14 @@ public class RBTree<T extends Comparable<T>> {
         return node == null || node.color == BLACK;
     }
 
+    public void setRed(RBNode<T> node) {
+        if (node != null) node.color = RED;
+    }
+
+    public void setBlack(RBNode<T> node) {
+        if (node != null) node.color = BLACK;
+    }
+
     private RBNode<T> getFather(RBNode<T> node) {
         return node == null || node.father == null ? null : node.father;
     }
@@ -96,5 +104,38 @@ public class RBTree<T extends Comparable<T>> {
         if (newPivot.father == null) this.root = newPivot;
     }
 
+    public void addNode(T data) {
+        RBNode<T> newNode = new RBNode<>(data);
+        RBNode<T> compareNode = this.root;
+        RBNode<T> compareNodePre = compareNode;
+        while (compareNode != null) {
+            compareNodePre = compareNode;
+            compareNode = compareNode.data.compareTo(newNode.data) > 0 ? compareNode.lchild : compareNode.rchild;
+        }
+        if (compareNodePre == null) this.root = newNode;
+        else {
+            if (compareNodePre.data.compareTo(newNode.data) > 0) { // newNode 小，插在compareNodePro的左子节点
+                compareNodePre.lchild = newNode;
+            } else {
+                compareNodePre.rchild = newNode;
+            }
+            newNode.father = compareNodePre;
+        }
+        //插入完毕，下面插入修正
+        addFixUp(newNode);
+    }
+
+    public void addFixUp(RBNode<T> node) {
+        RBNode<T> father = getFather(node);
+        RBNode<T> uncle = getUncle(node);
+        if (isRed(father) && isRed(uncle)) {
+            setBlack(father);
+            setBlack(uncle);
+            setRed(getFather(father));
+            node = getFather(father);
+        }
+        father = getFather(node);
+        uncle = getUncle(node);
+    }
 
 }
