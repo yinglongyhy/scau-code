@@ -138,4 +138,9 @@ public class RBTree<T extends Comparable<T>> {
         uncle = getUncle(node);
     }
 
+    public void todo() {
+
+    }
 }
+
+
