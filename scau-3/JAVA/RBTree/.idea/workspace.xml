@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea0a604f-a643-4fe5-8941-045830e506b6" name="Default" comment="新增红黑树Java代码">
-      <change afterPath="$PROJECT_DIR$/src/com/scau/test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/scau/RBTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/scau/RBTree.java" afterDir="false" />
-    </list>
+    <list default="true" id="ea0a604f-a643-4fe5-8941-045830e506b6" name="Default" comment="新增红黑树Java代码" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +13,7 @@
     <session id="590155988">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="15" />
+          <entry key="project.closed" value="16" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="2" />
@@ -47,13 +43,13 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="iml" value="1" />
-          <entry key="java" value="16" />
+          <entry key="java" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="16" />
+          <entry key="JAVA" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.spring.boot.run.usages" />
@@ -63,43 +59,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/scau/RBTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="452" column="43" selection-start-line="452" selection-start-column="43" selection-end-line="452" selection-end-column="43" />
+            <state relative-caret-position="-2288">
+              <caret line="126" column="47" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
               <folding>
-                <element signature="class#RBNode#0;class#RBTree#0" />
-                <element signature="method#RBNode#0;class#RBNode#0;class#RBTree#0" />
-                <element signature="method#getUncle#0;class#RBTree#0" />
-                <element signature="method#liftRotate#0;class#RBTree#0" />
-                <element signature="method#rightRotate#0;class#RBTree#0" />
-                <element signature="method#addNode#0;class#RBTree#0" />
-                <element signature="method#addFixUp#0;class#RBTree#0" />
-                <element signature="e#5737#5775#0" />
-                <element signature="method#searchNode#0;class#RBTree#0" />
-                <element signature="method#removeNode#0;class#RBTree#0" />
-                <element signature="e#6908#6924#0" />
-                <element signature="e#7613#7629#0" />
-                <element signature="method#removeFixUp#0;class#RBTree#0" />
-                <element signature="method#find#0;class#RBTree#0" />
-                <element signature="method#preTraversal#0;class#RBTree#0" />
-                <element signature="method#inTraversal#0;class#RBTree#0" />
-                <element signature="method#postTraversal#0;class#RBTree#0" />
-                <element signature="method#getMin#0;class#RBTree#0" />
-                <element signature="method#getMax#0;class#RBTree#0" />
-                <element signature="method#showRChild#0;class#RBTree#0" />
-                <element signature="method#showLChild#0;class#RBTree#0" />
+                <element signature="e#732#733#0" expanded="true" />
+                <element signature="e#764#765#0" expanded="true" />
+                <element signature="e#798#799#0" expanded="true" />
+                <element signature="e#830#831#0" expanded="true" />
+                <element signature="e#875#876#0" expanded="true" />
+                <element signature="e#933#934#0" expanded="true" />
+                <element signature="e#980#981#0" expanded="true" />
+                <element signature="e#1038#1039#0" expanded="true" />
+                <element signature="e#1081#1082#0" expanded="true" />
+                <element signature="e#1131#1132#0" expanded="true" />
+                <element signature="e#1176#1177#0" expanded="true" />
+                <element signature="e#1228#1229#0" expanded="true" />
+                <element signature="e#1279#1280#0" expanded="true" />
+                <element signature="e#1358#1359#0" expanded="true" />
+                <element signature="e#14990#14991#0" expanded="true" />
+                <element signature="e#15045#15046#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/scau/test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            <state relative-caret-position="308">
+              <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -117,7 +108,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/../../.." value="master" />
+        <entry key="$PROJECT_DIR$/../../.." value="dev" />
       </map>
     </option>
   </component>
@@ -149,12 +140,38 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="RBTree" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RBTree" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RBTree" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RBTree" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RBTree" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RBTree" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="scau" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534064769072" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534145809112" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -265,7 +282,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70730000" />
+    <option name="totallyTimeSpent" value="70764000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="28" width="1922" height="1053" extended-state="6" />
@@ -319,7 +336,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="新增红黑树Java代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增红黑树Java代码" />
+    <MESSAGE value="finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/scau/RBNode.java" />
@@ -328,38 +346,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/scau/RBTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="452" column="43" selection-start-line="452" selection-start-column="43" selection-end-line="452" selection-end-column="43" />
+        <state relative-caret-position="-2288">
+          <caret line="126" column="47" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
           <folding>
-            <element signature="class#RBNode#0;class#RBTree#0" />
-            <element signature="method#RBNode#0;class#RBNode#0;class#RBTree#0" />
-            <element signature="method#getUncle#0;class#RBTree#0" />
-            <element signature="method#liftRotate#0;class#RBTree#0" />
-            <element signature="method#rightRotate#0;class#RBTree#0" />
-            <element signature="method#addNode#0;class#RBTree#0" />
-            <element signature="method#addFixUp#0;class#RBTree#0" />
-            <element signature="e#5737#5775#0" />
-            <element signature="method#searchNode#0;class#RBTree#0" />
-            <element signature="method#removeNode#0;class#RBTree#0" />
-            <element signature="e#6908#6924#0" />
-            <element signature="e#7613#7629#0" />
-            <element signature="method#removeFixUp#0;class#RBTree#0" />
-            <element signature="method#find#0;class#RBTree#0" />
-            <element signature="method#preTraversal#0;class#RBTree#0" />
-            <element signature="method#inTraversal#0;class#RBTree#0" />
-            <element signature="method#postTraversal#0;class#RBTree#0" />
-            <element signature="method#getMin#0;class#RBTree#0" />
-            <element signature="method#getMax#0;class#RBTree#0" />
-            <element signature="method#showRChild#0;class#RBTree#0" />
-            <element signature="method#showLChild#0;class#RBTree#0" />
+            <element signature="e#732#733#0" expanded="true" />
+            <element signature="e#764#765#0" expanded="true" />
+            <element signature="e#798#799#0" expanded="true" />
+            <element signature="e#830#831#0" expanded="true" />
+            <element signature="e#875#876#0" expanded="true" />
+            <element signature="e#933#934#0" expanded="true" />
+            <element signature="e#980#981#0" expanded="true" />
+            <element signature="e#1038#1039#0" expanded="true" />
+            <element signature="e#1081#1082#0" expanded="true" />
+            <element signature="e#1131#1132#0" expanded="true" />
+            <element signature="e#1176#1177#0" expanded="true" />
+            <element signature="e#1228#1229#0" expanded="true" />
+            <element signature="e#1279#1280#0" expanded="true" />
+            <element signature="e#1358#1359#0" expanded="true" />
+            <element signature="e#14990#14991#0" expanded="true" />
+            <element signature="e#15045#15046#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/scau/test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        <state relative-caret-position="308">
+          <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
         </state>
       </provider>
     </entry>
