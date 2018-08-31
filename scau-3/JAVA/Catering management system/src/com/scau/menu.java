@@ -5,10 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.Collator;
 import java.util.*;
 
@@ -107,16 +104,34 @@ public class menu {
         }
     }
 
-    public void writeToXls() {
+    public void writeToXls() throws IOException {
+
         HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFSheet sheet = new wb.createSheet()
-        HSSFRow row = new sheet.createRow();
+        HSSFSheet sheet = wb.createSheet();
+
+        HSSFRow row = null;
+        int rowNum = 1;
+        row = sheet.createRow(0);
+        row.createCell(0).setCellValue("菜名");
+        row.createCell(1).setCellValue("价格");
+        for (dish eachDish :
+                this.menuSet) {
+            row = sheet.createRow(rowNum);
+            row.createCell(0).setCellValue(eachDish.name);
+            row.createCell(1).setCellValue(eachDish.price);
+            rowNum++;
+        }
+
+        // 写入磁盘
+        FileOutputStream outputStream = new FileOutputStream("/home/yinglongyhy/Templates/test.xls");
+        wb.write(outputStream);
+        outputStream.close();
 
     }
 
     public void readFromXls() throws IOException {
         File file = new File("/home/yinglongyhy/Templates/test.xls");
-        InputStream read_file = new FileInputStream(file);
+        FileInputStream read_file = new FileInputStream(file);
         HSSFWorkbook workbook = new HSSFWorkbook(read_file);
 
         HSSFSheet sheet = workbook.getSheetAt(0);
@@ -145,6 +160,7 @@ public class menu {
 
             add(name, price);
         }
+        read_file.close();
 
     }
 
