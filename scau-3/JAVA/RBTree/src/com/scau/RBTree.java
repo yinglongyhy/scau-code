@@ -422,26 +422,6 @@ public class RBTree<T extends Comparable<T>> {
         }
     }
 
-    public void getMin(RBNode<T> node) {
-        if (node == null) {
-            return;
-        }
-        while (node.lchild != null) {
-            node = node.lchild;
-        }
-        System.out.println(node.data);
-    }
-
-    public void getMax(RBNode<T> node) {
-        if (node == null) {
-            return;
-        }
-        while (node.rchild != null) {
-            node = node.rchild;
-        }
-        System.out.println(node.data);
-    }
-
     public void showRChild(RBNode<T> node) {
         if (node.rchild != null) {
             System.out.println(node.rchild.data);
@@ -461,6 +441,29 @@ public class RBTree<T extends Comparable<T>> {
     public void showRoot() {
         System.out.println(this.getRoot().data);
     }
-}
 
+    /*
+    红黑树应用，找最大最小值
+     */
+
+    public void getMin(RBNode<T> node) {
+        if (node == null) {
+            return;
+        }
+        while (node.lchild != null) {
+            node = node.lchild;
+        }
+        System.out.println(node.data);
+    }
+
+    public void getMax(RBNode<T> node) {
+        if (node == null) {
+            return;
+        }
+        while (node.rchild != null) {
+            node = node.rchild;
+        }
+        System.out.println(node.data);
+    }
+}
 
