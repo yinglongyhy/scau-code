@@ -13,28 +13,38 @@ import java.io.IOException;
 import java.text.Collator;
 import java.util.*;
 
-/*
-    目标：添加种类
-    修改：内部类，addDish(), addDishToMenu(), removeDish(), removeDishFromMenu(), change(), search(), traverse(), writeToXls(), readFromXls()
- */
-
-public class Menu {
+public class Menu implements MenuList{
 
     /* 内部类：Dish */
     public class Dish implements Comparable<Dish> {
+        String number;
         String name;
         String sort;
         double price;
+
+        Dish(String name) {
+            this(null, name, null, 0);
+        }
 
         Dish(String name, String sort) {
             this(name, sort, 0.0);
         }
 
         Dish(String name, String sort, double price) {
+            this.number = this.createNumber();
+            this.name = name;
+            this.sort = sort;
+            this.price = price;
+//            this(, name, sort, price);
+        }
+
+        Dish(String number, String name, String sort, double price) {
+            this.number = number;
             this.name = name;
             this.sort = sort;
             this.price = price;
         }
+
 
         @Override
         public int compareTo(Dish Dish) {
@@ -49,25 +59,37 @@ public class Menu {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Dish dish = (Dish) o;
-            return Objects.equals(name, dish.name) &&
-                    Objects.equals(sort, dish.sort);
+            return Objects.equals(name, dish.name);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(name, sort);
+            return Objects.hash(name);
         }
 
         @Override
         public String toString() {
-            return this.name + "\t" + this.price;
+            return this.number + "\t" + this.name + "\t" + "\t" + this.price;
         }
+
+        String createNumber() {
+            while (true) {
+                int number = (int) (Math.random() * 9000) + 1000;
+                String num = Integer.toString(number);
+                if (!searchByNameOrNumber(num)) {
+                    return num;
+                }
+            }
+        }
+
     }
 
     private TreeMap<String, TreeSet<Dish>> menu;
+    private HashMap<String, String> numberToName;
 
     public Menu() {
         menu = new TreeMap<>();
+        numberToName = new HashMap<>();
     }
 
     private double inputDouble() {
@@ -108,7 +130,17 @@ public class Menu {
         if (!menu.containsKey(sort)) {
             menu.put(sort, new TreeSet<>());
         }
-        menu.get(sort).add(new Dish(name, sort, price));
+        Dish dish = new Dish(name, sort, price);
+        menu.get(sort).add(dish);
+        numberToName.put(dish.number, dish.name);
+    }
+
+    private void addDish(String number, String name, String sort, double price) {
+        if (!menu.containsKey(sort)) {
+            menu.put(sort, new TreeSet<>());
+        }
+        menu.get(sort).add(new Dish(number, name, sort, price));
+        numberToName.put(number, name);
     }
 
     private void addDishToMenu() {
@@ -122,34 +154,42 @@ public class Menu {
         addDish(name, sort, price);
     }
 
-    private void removeDish(String name, String sort) {
-        Dish dish = new Dish(name, sort);
-        if (menu.containsKey(sort)) {
-            menu.get(sort).remove(dish);
+    private void removeDish(String nameOrNumber) {
+        // 用dish比较就行了
+        String name = getNameByNameOrNumber(nameOrNumber);
+        String sort = searchByNameReturnSort(name);
+        if (sort == null) {
+            return;
         }
+        Dish dish = new Dish(name);
+        numberToName.remove(dish.number);
+        menu.get(sort).remove(dish);
+    }
+
+    private String getNameByNameOrNumber(String nameOrNumber) {
+        if (isNumber(nameOrNumber)) {
+            return numberToName.get(nameOrNumber);
+        }
+        return nameOrNumber;
     }
 
     private void removeDishFromMenu() {
+        String nameOrNumber = getNameOrNumber();
+//        System.out.print("请输入菜的种类:");
+//        String sort = input.next();
+        removeDish(nameOrNumber);
+    }
+
+    private String getNameOrNumber() {
         Scanner input = new Scanner(System.in);
-        System.out.print("请输入菜名:");
-        String name = input.next();
-        System.out.print("请输入菜的种类:");
-        String sort = input.next();
-        removeDish(name, sort);
+        System.out.print("请输入菜名或编号:");
+        return input.next();
     }
 
     private void change() {
         Scanner input = new Scanner(System.in);
-        System.out.print("请输入菜名:");
-        String name = input.next();
-        System.out.print("请输入菜的种类:");
-        String sort = input.next();
-        if (!menu.containsKey(sort)) {
-            return;
-        }
-        if (!menu.get(sort).contains(new Dish(name, sort))) {
-            return;
-        }
+        System.out.print("请输入菜名或编号:");
+        String nameOrNumber = input.next();
         System.out.print("请输入新菜名:");
         String newName = input.next();
         System.out.print("请输入新菜的种类:");
@@ -157,22 +197,36 @@ public class Menu {
         System.out.print("请输入新菜的价格:");
         double newPrice = inputDouble();
         addDish(newName, newSort, newPrice);
-        removeDish(name, sort);
+        removeDish(nameOrNumber);
     }
 
-    private boolean search() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("请输入菜名:");
-        String name = input.next();
-        System.out.print("请输入菜的种类:");
-        String sort = input.next();
-        if (!menu.containsKey(sort)) {
-            return false;
+    public boolean search() {
+        String nameOrNumber = getNameOrNumber();
+        return searchByNameOrNumber(nameOrNumber);
+    }
+
+    private boolean searchByNameOrNumber(String nameOrNumber) {
+        String name = getNameByNameOrNumber(nameOrNumber);
+        return searchByNameReturnSort(name) != null;
+    }
+
+    private String searchByNameReturnSort(String name) {
+        if (name == null) {
+            return null;
         }
-        return menu.get(sort).contains(new Dish(name, sort));
+        Collection<TreeSet<Dish>> dishes = menu.values();
+        for (TreeSet<Dish> aDishes :
+                dishes) {
+            Dish dish = new Dish(name);
+            if (aDishes.contains(dish)) {
+                return aDishes.first().sort;
+            }
+        }
+        return null;
     }
 
-    private void traverse() {
+    @Override
+    public void traverse() {
         for (Map.Entry<String, TreeSet<Dish>> aMap :
                 menu.entrySet()) {
             System.out.println("-----------------------------" + aMap.getKey() + "-----------------------------");
@@ -193,13 +247,15 @@ public class Menu {
             HSSFRow row;
             int rowNum = 1;
             row = sheet.createRow(0);
-            row.createCell(0).setCellValue("菜名");
-            row.createCell(1).setCellValue("价格");
+            row.createCell(0).setCellValue("编号");
+            row.createCell(1).setCellValue("菜名");
+            row.createCell(2).setCellValue("价格");
             for (Dish aDish :
                     aMap.getValue()) {
                 row = sheet.createRow(rowNum);
-                row.createCell(0).setCellValue(aDish.name);
-                row.createCell(1).setCellValue(aDish.price);
+                row.createCell(0).setCellValue(aDish.number);
+                row.createCell(1).setCellValue(aDish.name);
+                row.createCell(2).setCellValue(aDish.price);
                 rowNum++;
             }
         }
@@ -210,6 +266,7 @@ public class Menu {
         outputStream.close();
     }
 
+    @Override
     public void readFromXls() throws IOException {
         FileInputStream fileInputStream;
         try {
@@ -225,18 +282,22 @@ public class Menu {
 
             for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow row = hssfSheet.getRow(rowNum);
+                String number = null;
                 String name = null;
                 double price = 0;
                 HSSFCell cell = row.getCell(0);
                 if (cell.getCellTypeEnum() == CellType.STRING) {
+                    number = cell.getStringCellValue();
+                }
+                cell = row.getCell(1);
+                if (cell.getCellTypeEnum() == CellType.STRING) {
                     name = cell.getStringCellValue();
                 }
-                // 下面if出问题
-                cell = row.getCell(1);
+                cell = row.getCell(2);
                 if (cell.getCellTypeEnum() == CellType.NUMERIC) {
                     price = cell.getNumericCellValue();
                 }
-                this.addDish(name, hssfSheet.getSheetName(), price);
+                this.addDish(number, name, hssfSheet.getSheetName(), price);
 
             }
             fileInputStream.close();
@@ -244,17 +305,11 @@ public class Menu {
 
     }
 
+    @Override
     public void menuConsole() throws IOException {
         int choice;
         while (true) {
-            System.out.println("--------------" + "请选择" + "--------------");
-            System.out.println("1、增加菜式");
-            System.out.println("2、删除菜式");
-            System.out.println("3、修改菜式");
-            System.out.println("4、查找菜式");
-            System.out.println("5、遍历菜式");
-            System.out.println("6、保存菜式");
-            System.out.println("7、退出菜单控制台");
+            showChoice();
 
             choice = inputInt();
 
@@ -289,9 +344,43 @@ public class Menu {
 
                 case 7:
                     return;
+                case 8:
+                    System.out.println(getNameByNameOrNumber("5153"));
+                    break;
             }
 
         }
+    }
+
+    private void showChoice() {
+        System.out.println("--------------" + "请选择" + "--------------");
+        System.out.println("1、增加菜式");
+        System.out.println("2、删除菜式");
+        System.out.println("3、修改菜式");
+        System.out.println("4、查找菜式");
+        System.out.println("5、遍历菜式");
+        System.out.println("6、保存菜式");
+        System.out.println("7、退出菜单控制台");
+    }
+
+    @Override
+    public Dish getDish(String nameOrNumber) {
+        String sort = searchByNameReturnSort(nameOrNumber);
+        if (sort != null) {
+            Set<Dish> dishes = menu.get(sort);
+            for (Dish aDish :
+                    dishes) {
+                if (aDish.number.equals(nameOrNumber) || aDish.name.equals(nameOrNumber)) {
+                    return aDish;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean isNumber(String nameOrNumber) {
+        String regex = "^[1-9]\\d{3}";
+        return nameOrNumber.matches(regex);
     }
 
 }
