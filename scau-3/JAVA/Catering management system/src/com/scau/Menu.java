@@ -22,14 +22,6 @@ public class Menu implements MenuList{
         String sort;
         double price;
 
-        Dish(String name) {
-            this(null, name, null, 0);
-        }
-
-        Dish(String name, String sort) {
-            this(name, sort, 0.0);
-        }
-
         Dish(String name, String sort, double price) {
             this.number = this.createNumber();
             this.name = name;
@@ -241,6 +233,7 @@ public class Menu implements MenuList{
 
     // something to do
     @Override
+    @SuppressWarnings("unchecked")
     public void traverse() {
         Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComprator();
         for (Map.Entry<String, HashMap<String, Dish>> aMap:
@@ -305,6 +298,7 @@ public class Menu implements MenuList{
     }
 
 
+    @SuppressWarnings("unchecked")
     private void writeToXls() throws IOException {
 
         HSSFWorkbook wb = new HSSFWorkbook();
