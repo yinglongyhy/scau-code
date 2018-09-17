@@ -76,7 +76,7 @@ public class Menu implements MenuList{
             while (true) {
                 int number = (int) (Math.random() * 9000) + 1000;
                 String num = Integer.toString(number);
-                if (!searchByNameOrNumber(num)) {
+                if (!numberConflict(num)) {
                     return num;
                 }
             }
@@ -84,12 +84,10 @@ public class Menu implements MenuList{
 
     }
 
-    private TreeMap<String, TreeSet<Dish>> menu;
-    private HashMap<String, String> numberToName;
+    private TreeMap<String, HashMap<String, Dish>> menu;
 
     public Menu() {
         menu = new TreeMap<>();
-        numberToName = new HashMap<>();
     }
 
     private double inputDouble() {
@@ -127,20 +125,35 @@ public class Menu implements MenuList{
     }
 
     private void addDish(String name, String sort, double price) {
+        if (getDish(name) != null) {
+            return;
+        }
+
         if (!menu.containsKey(sort)) {
-            menu.put(sort, new TreeSet<>());
+            menu.put(sort, new HashMap<>());
         }
         Dish dish = new Dish(name, sort, price);
-        menu.get(sort).add(dish);
-        numberToName.put(dish.number, dish.name);
+
+        addDishToSort(sort, dish);
     }
 
+    // 从文件读取数据时用，不会生成随机number
     private void addDish(String number, String name, String sort, double price) {
+
         if (!menu.containsKey(sort)) {
-            menu.put(sort, new TreeSet<>());
+            menu.put(sort, new HashMap<>());
         }
-        menu.get(sort).add(new Dish(number, name, sort, price));
-        numberToName.put(number, name);
+        Dish dish = new Dish(number, name, sort, price);
+        addDishToSort(sort, dish);
+        //        menu.get(sort).add(new Dish(number, name, sort, price));
+//        numberToName.put(number, name);
+    }
+
+    private void addDishToSort(String sort, Dish dish) {
+        // 添加number, name
+        HashMap<String, Dish> menuSort = menu.get(sort);
+        menuSort.put(dish.number, dish);
+        menuSort.put(dish.name, dish);
     }
 
     private void addDishToMenu() {
@@ -155,22 +168,20 @@ public class Menu implements MenuList{
     }
 
     private void removeDish(String nameOrNumber) {
-        // 用dish比较就行了
-        String name = getNameByNameOrNumber(nameOrNumber);
-        String sort = searchByNameReturnSort(name);
-        if (sort == null) {
+        Dish dish = getDish(nameOrNumber);
+        if (dish == null) {
             return;
         }
-        Dish dish = new Dish(name);
-        numberToName.remove(dish.number);
-        menu.get(sort).remove(dish);
-    }
-
-    private String getNameByNameOrNumber(String nameOrNumber) {
-        if (isNumber(nameOrNumber)) {
-            return numberToName.get(nameOrNumber);
-        }
-        return nameOrNumber;
+        String sort = dish.sort;
+        HashMap<String, Dish> dishes = menu.get(sort);
+        dishes.remove(dish.number);
+        dishes.remove(dish.name);
+//        if (sort == null) {
+//            return;
+//        }
+//        Dish dish = new Dish(name);
+//        numberToName.remove(dish.number);
+//        menu.get(sort).remove(dish);
     }
 
     private void removeDishFromMenu() {
@@ -202,46 +213,104 @@ public class Menu implements MenuList{
 
     public boolean search() {
         String nameOrNumber = getNameOrNumber();
-        return searchByNameOrNumber(nameOrNumber);
+        return getDish(nameOrNumber) != null;
     }
 
-    private boolean searchByNameOrNumber(String nameOrNumber) {
-        String name = getNameByNameOrNumber(nameOrNumber);
-        return searchByNameReturnSort(name) != null;
+    private boolean numberConflict(String nameOrNumber) {
+        return getDish(nameOrNumber) != null;
     }
 
-    private String searchByNameReturnSort(String name) {
-        if (name == null) {
+    @Override
+    public Dish getDish(String nameOrNumber) {
+        if (nameOrNumber == null) {
             return null;
         }
-        Collection<TreeSet<Dish>> dishes = menu.values();
-        for (TreeSet<Dish> aDishes :
-                dishes) {
-            Dish dish = new Dish(name);
-            if (aDishes.contains(dish)) {
-                return aDishes.first().sort;
+        Collection<HashMap<String, Dish>> sorts = menu.values();
+        for (HashMap<String, Dish> aSort :
+                sorts) {
+            if (aSort.containsKey(nameOrNumber)) {
+                return aSort.get(nameOrNumber);
             }
+//            Dish dish = new Dish(nameOrNumber);
+//            if (aDishes.contains(dish)) {
+//                return aDishes.first().sort;
+//            }
         }
         return null;
     }
 
+    // something to do
     @Override
     public void traverse() {
-        for (Map.Entry<String, TreeSet<Dish>> aMap :
+        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComprator();
+        for (Map.Entry<String, HashMap<String, Dish>> aMap:
                 menu.entrySet()) {
             System.out.println("-----------------------------" + aMap.getKey() + "-----------------------------");
-            for (Dish aSet :
-                    aMap.getValue()) {
-               System.out.println(aSet);
+            Collection<Dish> dishList = aMap.getValue().values();
+            Set<Dish> treeSet = new TreeSet<>(comparator);
+            treeSet.addAll(dishList);
+
+            for (Dish aDish :
+                    treeSet) {
+                System.out.println(aDish);
             }
+            
+//            for (Dish aSet :
+//                    aMap.getValue()) {
+//               System.out.println(aSet);
+//            }
         }
     }
+
+    // 1: 编号， 2: 菜名， 3: 价格+编号
+    private Object selectComprator() {
+        showSortChoice();
+
+        int choice = inputInt();
+
+        return selectComprator(choice);
+
+    }
+
+    // 1: 编号， 2: 菜名， 3: 价格+编号
+    private Object selectComprator(int choice) {
+        switch (choice) {
+            case 1:
+                return (Comparator<Dish>) (o1, o2) -> o1.number.compareTo(o2.number);
+            case 2:
+                return (Comparator<Dish>) (o1, o2) -> o1.name.compareTo(o2.name);
+            case 3:
+                return (Comparator<Dish>) (o1, o2) -> {
+                    if (o1.price > o2.price) {
+                        return 1;
+                    } else if (o1.price < o2.price) {
+                        return -1;
+                    } else {
+                        return o1.number.compareTo(o2.number);
+                    }
+                };
+
+        }
+
+        return null;
+    }
+
+    private void showSortChoice() {
+        System.out.println("请输入排序依据：");
+
+        System.out.println("1、编号");
+        System.out.println("2、菜名");
+        System.out.println("3、价格");
+
+    }
+
 
     private void writeToXls() throws IOException {
 
         HSSFWorkbook wb = new HSSFWorkbook();
+        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComprator(2);
 
-        for (Map.Entry<String, TreeSet<Dish>> aMap :
+        for (Map.Entry<String, HashMap<String, Dish>> aMap :
                 menu.entrySet()) {
             HSSFSheet sheet = wb.createSheet(aMap.getKey());
             HSSFRow row;
@@ -250,8 +319,10 @@ public class Menu implements MenuList{
             row.createCell(0).setCellValue("编号");
             row.createCell(1).setCellValue("菜名");
             row.createCell(2).setCellValue("价格");
+            Set<Dish> dishes = new TreeSet<>(comparator);
+            dishes.addAll(aMap.getValue().values());
             for (Dish aDish :
-                    aMap.getValue()) {
+                    dishes) {
                 row = sheet.createRow(rowNum);
                 row.createCell(0).setCellValue(aDish.number);
                 row.createCell(1).setCellValue(aDish.name);
@@ -344,9 +415,6 @@ public class Menu implements MenuList{
 
                 case 7:
                     return;
-                case 8:
-                    System.out.println(getNameByNameOrNumber("5153"));
-                    break;
             }
 
         }
@@ -361,26 +429,6 @@ public class Menu implements MenuList{
         System.out.println("5、遍历菜式");
         System.out.println("6、保存菜式");
         System.out.println("7、退出菜单控制台");
-    }
-
-    @Override
-    public Dish getDish(String nameOrNumber) {
-        String sort = searchByNameReturnSort(nameOrNumber);
-        if (sort != null) {
-            Set<Dish> dishes = menu.get(sort);
-            for (Dish aDish :
-                    dishes) {
-                if (aDish.number.equals(nameOrNumber) || aDish.name.equals(nameOrNumber)) {
-                    return aDish;
-                }
-            }
-        }
-        return null;
-    }
-
-    private boolean isNumber(String nameOrNumber) {
-        String regex = "^[1-9]\\d{3}";
-        return nameOrNumber.matches(regex);
     }
 
 }
