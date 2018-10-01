@@ -159,6 +159,11 @@ public class Menu implements MenuList{
         addDish(name, sort, price);
     }
 
+    /**
+     * 根据菜名或编号删除菜品.
+     * @see <code>nameOrNumber</code> 菜名或编号
+     * @param nameOrNumber
+     */
     private void removeDish(String nameOrNumber) {
         Dish dish = getDish(nameOrNumber);
         if (dish == null) {
@@ -210,25 +215,6 @@ public class Menu implements MenuList{
 
     private boolean numberConflict(String nameOrNumber) {
         return getDish(nameOrNumber) != null;
-    }
-
-    @Override
-    public Dish getDish(String nameOrNumber) {
-        if (nameOrNumber == null) {
-            return null;
-        }
-        Collection<HashMap<String, Dish>> sorts = menu.values();
-        for (HashMap<String, Dish> aSort :
-                sorts) {
-            if (aSort.containsKey(nameOrNumber)) {
-                return aSort.get(nameOrNumber);
-            }
-//            Dish dish = new Dish(nameOrNumber);
-//            if (aDishes.contains(dish)) {
-//                return aDishes.first().sort;
-//            }
-        }
-        return null;
     }
 
     // something to do
@@ -423,6 +409,21 @@ public class Menu implements MenuList{
         System.out.println("5、遍历菜式");
         System.out.println("6、保存菜式");
         System.out.println("7、退出菜单控制台");
+    }
+
+    @Override
+    public Dish getDish(String nameOrNumber) {
+        if (nameOrNumber == null) {
+            return null;
+        }
+        Collection<HashMap<String, Dish>> sorts = menu.values();
+        for (HashMap<String, Dish> aSort :
+                sorts) {
+            if (aSort.containsKey(nameOrNumber)) {
+                return aSort.get(nameOrNumber);
+            }
+        }
+        return null;
     }
 
 }
