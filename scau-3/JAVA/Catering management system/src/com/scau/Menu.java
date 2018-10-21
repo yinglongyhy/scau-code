@@ -82,6 +82,11 @@ public class Menu implements MenuList{
         menu = new TreeMap<>();
     }
 
+    /**
+     * 读取double型输入.
+     * <p>通过死循环读取输入，输入有效（double）则break</p>
+     * @return double 读取到的double型输入
+     */
     private double inputDouble() {
         Scanner input;
         double price;
@@ -99,6 +104,11 @@ public class Menu implements MenuList{
         return price;
     }
 
+    /**
+     * 读取int型输入.
+     * <p>通过死循环读取输入，输入有效（int）则break</p>
+     * @return int 读取到的int型输入
+     */
     private int inputInt() {
         Scanner input;
         int number;
@@ -116,6 +126,15 @@ public class Menu implements MenuList{
         return number;
     }
 
+    /**
+     * 添加菜品.
+     * <p>1.若菜品已存在，不进行操作</p>
+     * <p>2.若菜的种类不存在，则新建种类</p>
+     * <p>3.添加菜品到相应的种类</p>
+     * @param name 菜名
+     * @param sort 菜的种类
+     * @param price 菜的价格
+     */
     private void addDish(String name, String sort, double price) {
         if (getDish(name) != null) {
             return;
@@ -129,7 +148,17 @@ public class Menu implements MenuList{
         addDishToSort(sort, dish);
     }
 
-    // 从文件读取数据时用，不会生成随机number
+    /**
+     * 添加菜品.
+     * <p>从文件读取数据时用，不会生成随机number</p>
+     * <p>1.若菜品已存在，不进行操作</p>
+     * <p>2.若菜的种类不存在，则新建种类</p>
+     * <p>3.添加菜品到相应的种类</p>
+     * @param number 菜品编号
+     * @param name 菜名
+     * @param sort 菜的种类
+     * @param price 菜的价格
+     */
     private void addDish(String number, String name, String sort, double price) {
 
         if (!menu.containsKey(sort)) {
@@ -141,6 +170,11 @@ public class Menu implements MenuList{
 //        numberToName.put(number, name);
     }
 
+    /**
+     * 添加菜的编号和菜名进分类里.
+     * @param sort 分类
+     * @param dish 菜品
+     */
     private void addDishToSort(String sort, Dish dish) {
         // 添加number, name
         HashMap<String, Dish> menuSort = menu.get(sort);
@@ -148,6 +182,9 @@ public class Menu implements MenuList{
         menuSort.put(dish.name, dish);
     }
 
+    /**
+     * 添加菜品的控制台.
+     */
     private void addDishToMenu() {
         Scanner input = new Scanner(System.in);
         System.out.print("请输入菜名:");
@@ -161,8 +198,7 @@ public class Menu implements MenuList{
 
     /**
      * 根据菜名或编号删除菜品.
-     * @see <code>nameOrNumber</code> 菜名或编号
-     * @param nameOrNumber
+     * @param nameOrNumber 菜名或编号
      */
     private void removeDish(String nameOrNumber) {
         Dish dish = getDish(nameOrNumber);
@@ -181,19 +217,28 @@ public class Menu implements MenuList{
 //        menu.get(sort).remove(dish);
     }
 
+    /**
+     * 删除菜品控制台.
+     */
     private void removeDishFromMenu() {
         String nameOrNumber = getNameOrNumber();
-//        System.out.print("请输入菜的种类:");
-//        String sort = input.next();
         removeDish(nameOrNumber);
     }
 
+    /**
+     * 读取菜名或编号的输入.
+     * @return String 菜名或编号
+     */
     private String getNameOrNumber() {
         Scanner input = new Scanner(System.in);
         System.out.print("请输入菜名或编号:");
         return input.next();
     }
 
+    /**
+     * 修改菜品.
+     * <p>先添加新菜品再删除旧菜品</p>
+     */
     private void change() {
         Scanner input = new Scanner(System.in);
         System.out.print("请输入菜名或编号:");
@@ -208,20 +253,36 @@ public class Menu implements MenuList{
         removeDish(nameOrNumber);
     }
 
+    /**
+     * 根据菜名或编号查询该菜是否存在.
+     * <p> 调用<code>getNameOrNumber()</code>获得菜名或编号的输入，再通过getDish()得到菜的对象，最后检查对象是否为空
+     * @see Menu#getNameOrNumber()
+     * @see Menu#getDish(String)
+     * @return boolean 查询结果
+     **/
     public boolean search() {
         String nameOrNumber = getNameOrNumber();
         return getDish(nameOrNumber) != null;
     }
 
+    /**
+     * 检查菜名或编号是否冲突.
+     * <p>冲突返回<code>true</code></p>
+     * @param nameOrNumber 菜名或编号
+     * @return true-冲突, false-不冲突
+     */
     private boolean numberConflict(String nameOrNumber) {
         return getDish(nameOrNumber) != null;
     }
 
-    // something to do
+    /**
+     * 根据用户选择的筛选器进行遍历（以分类分隔）.
+     * <p>1: 编号， 2: 菜名， 3: 价格+编号</p>
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void traverse() {
-        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComprator();
+        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComparator();
         for (Map.Entry<String, HashMap<String, Dish>> aMap:
                 menu.entrySet()) {
             System.out.println("-----------------------------" + aMap.getKey() + "-----------------------------");
@@ -233,26 +294,32 @@ public class Menu implements MenuList{
                     treeSet) {
                 System.out.println(aDish);
             }
-            
-//            for (Dish aSet :
-//                    aMap.getValue()) {
-//               System.out.println(aSet);
-//            }
         }
     }
 
-    // 1: 编号， 2: 菜名， 3: 价格+编号
-    private Object selectComprator() {
+
+    /**
+     * 让用户选择比较器.
+     * <p>打印比较器列表，接收用户选择</p>
+     * <p>1: 编号， 2: 菜名， 3: 价格+编号</p>
+     * @return 比较器对象
+     */
+    private Object selectComparator() {
         showSortChoice();
 
         int choice = inputInt();
 
-        return selectComprator(choice);
+        return selectComparator(choice);
 
     }
 
-    // 1: 编号， 2: 菜名， 3: 价格+编号
-    private Object selectComprator(int choice) {
+    /**
+     * 根据<code>choice</code>选择相应的比较器.
+     * <p>1: 编号， 2: 菜名， 3: 价格+编号</p>
+     * @param choice 比较器序号
+     * @return 比较器对象
+     */
+    private Object selectComparator(int choice) {
         switch (choice) {
             case 1:
                 return (Comparator<Dish>) (o1, o2) -> o1.number.compareTo(o2.number);
@@ -274,6 +341,9 @@ public class Menu implements MenuList{
         return null;
     }
 
+    /**
+     * 打印出比较器列表.
+     */
     private void showSortChoice() {
         System.out.println("请输入排序依据：");
 
@@ -284,11 +354,15 @@ public class Menu implements MenuList{
     }
 
 
+    /**
+     * 把数据写入文件.
+     * @throws IOException 如果发生I/O错误
+     */
     @SuppressWarnings("unchecked")
     private void writeToXls() throws IOException {
 
         HSSFWorkbook wb = new HSSFWorkbook();
-        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComprator(2);
+        Comparator<? super Dish> comparator = (Comparator<? super Dish>) selectComparator(2);
 
         for (Map.Entry<String, HashMap<String, Dish>> aMap :
                 menu.entrySet()) {
@@ -317,6 +391,11 @@ public class Menu implements MenuList{
         outputStream.close();
     }
 
+    /**
+     * 从文件读取数据.
+     * <p>文件不存在时直接结束</p>
+     * @throws IOException 如果发生I/O错误
+     */
     @Override
     public void readFromXls() throws IOException {
         FileInputStream fileInputStream;
@@ -356,6 +435,10 @@ public class Menu implements MenuList{
 
     }
 
+    /**
+     * 总控制台.
+     * @throws IOException 如果发生I/O错误
+     */
     @Override
     public void menuConsole() throws IOException {
         int choice;
@@ -400,6 +483,9 @@ public class Menu implements MenuList{
         }
     }
 
+    /**
+     * 打印总控制台选项.
+     */
     private void showChoice() {
         System.out.println("--------------" + "请选择" + "--------------");
         System.out.println("1、增加菜式");
@@ -411,6 +497,11 @@ public class Menu implements MenuList{
         System.out.println("7、退出菜单控制台");
     }
 
+    /**
+     * 根据菜名或编号得到菜品.
+     * @param nameOrNumber 菜名或编号
+     * @return Dish 菜品
+     */
     @Override
     public Dish getDish(String nameOrNumber) {
         if (nameOrNumber == null) {
